@@ -20,20 +20,25 @@ mix = distr.Categorical(torch.tensor([1.0, 1.0, 1.0])/3)
 comp = distr.Normal(torch.tensor([ -4.0, 0.0, 4.0]),torch.tensor([1.0,0.50,1.0]))
 GenGaussian_3 = distr.MixtureSameFamily(mix, comp)
 Gen_matrix = {'Gaussian':distr.Normal(0,1),
-            'Exp':distr.Exponential(1.0),
+            #'Exp':distr.Exponential(1.0),
             'Gamma':distr.Gamma(conc,rate),
             'Mix_2_Gaussian':GenGaussian_2,
-            'Mix_3_Gaussian':GenGaussian_3} 
-N_samples_Stop_matrix = {'Gaussian':[50,150,400,1000],
-            'Exp':[50,150,400,1000],
-            'Gamma':[50,150,400,1000],
-            'Mix_2_Gaussian':[50,150,400,1000],
-            'Mix_3_Gaussian':[200,500,800,1500]} 
+            #'Mix_3_Gaussian':GenGaussian_3,
+            } 
+N_samples_Stop_matrix = {'Gaussian':[100,400,1000],
+            #'Exp':[100,400,1000],
+            'Gamma':[100,400,1000],
+            'Mix_2_Gaussian':[100,400,1000],
+            #'Mix_3_Gaussian':[200,500,800,1500],
+            } 
+N_col = len(Gen_matrix)
+N_row = len(N_samples_Stop_matrix['Gaussian'])
 
 #Parameters for plotting
 Color = ['blue','green','black']
 Labels = ['Distr.', 'Distr. & Dueling', 'Real CDF'] 
-fig, axs = pl.subplots(nrows=4, ncols=5, figsize=[16.6,12])
+fig, axs = pl.subplots(nrows=N_row , ncols=N_col, figsize=[20*N_col/5,8])
+
 
 #===================================================
 #Set-up the hyperparameters and initializations ones
@@ -105,13 +110,24 @@ for Name_distr, Gen in Gen_matrix.items():
         else:
             axs[plt_i,Plot_column].plot(x,Gen.cdf(x),Color[-1],label=Labels[-1], linewidth=2.0)
         axs[plt_i,Plot_column].set_title(str(i+1)+' samples')
+        axs[plt_i,Plot_column].set_ylabel("CDF and approx. of CDF of $Z_{}$".format(Plot_column+1))
+        axs[plt_i,Plot_column].set_xlabel("Domain of Random Variable $Z_{}$".format(Plot_column+1))
         plt_i += 1
     Plot_column += 1
-
 
 lines_labels = [fig.axes[-1].get_legend_handles_labels()] 
 lines, labels = [sum(lol, []) for lol in zip(*lines_labels)]
 pl.subplots_adjust(left=0.03, bottom=0.03, right=0.99, top=0.94, wspace=0.14, hspace=0.38)
 fig.legend(lines, labels, loc='right', bbox_to_anchor=(0.5, 0.96, 0.48, 0.045), fontsize='x-large', ncol=3)
+
+fig.subplots_adjust(
+    left  = 0.1,  # the left side of the subplots of the figure
+    right = 0.98,    # the right side of the subplots of the figure
+    bottom = 0.02,   # the bottom of the subplots of the figure
+    top = 0.92,      # the top of the subplots of the figure
+    wspace = 0.27,   # the amount of width reserved for blank space between subplots
+    hspace = 0.47)   # the amount of height reserved for white space between subplots
+
+
 pl.savefig('Appendix_fig1.eps', format='eps')
 pl.show()
