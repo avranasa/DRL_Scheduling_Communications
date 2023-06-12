@@ -66,7 +66,7 @@ def test_Scheduler(NameMethod, ActionScheduler, env, RESOURCES=None, device="cpu
                 MoreSteps = False
                 #Check Convergence
                 for UserClass in env.satisfiedPerClass:
-                    MoreSteps |= abs(SuccessRatesPerClass[UserClass] - SuccessRatesPerClass_old[UserClass]) > 0.01* SuccessRatesPerClass[UserClass]                         
+                    MoreSteps |= abs(SuccessRatesPerClass[UserClass] - SuccessRatesPerClass_old[UserClass]) > 0.001* SuccessRatesPerClass[UserClass]                         
             SuccessRatesPerClass_old = SuccessRatesPerClass            
     
 
