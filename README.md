@@ -29,13 +29,12 @@ Additionally, for the "Deep Scheduler", Tensorboard is used to record and plot t
 
 -The last one named "Supplementary_figures" contains the code that was used to generate some additional plots (for example the Figure 3).
 
-
-****************************
+## Citation
 The link to our paper:
 https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10250919
 
-In case you want to use either the github repository for your research project please use the following citation:
-
+If you find this repository helpful, please consider citing:
+```
 @Article{DRL_Scheduling_Communications ,
 author={Avranas, Apostolos and Ciblat, Philippe and Kountouris, Marios},
 journal={IEEE Transactions on Machine Learning in Communications and Networking},
@@ -45,4 +44,4 @@ volume={1},
 number={},
 pages={225-241},
 doi={10.1109/TMLCN.2023.3314705}}
-*****************************
+```
